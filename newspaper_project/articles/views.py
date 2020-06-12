@@ -3,12 +3,18 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import  DeleteView, UpdateView
 from .models import Article
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin,CreateView):
     template_name = "article_create.html"
     model = Article
     fields = ('title','body')
+    login_url = 'login'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
     
 class ArticleListView(ListView):
     template_name = "article_list.html"
