@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 class ArticleCreateView(CreateView):
     template_name = "article_create.html"
     model = Article
-    fields = ('title','body','author')
+    fields = ('title','body')
     
 class ArticleListView(ListView):
     template_name = "article_list.html"
